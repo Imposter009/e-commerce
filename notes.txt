@@ -1,0 +1,8 @@
+backend:
+1}install the mongodb server and compass in the system
+2}when the directory is desktop. then: mongod --path data
+3}while login we need to copy paste the token in the common.js file in the token variable at  the end.
+4}token we can find in postman when we make the loginin request.
+frontend:
+1} force install the modules
+2}database can be find in the data.json file.
