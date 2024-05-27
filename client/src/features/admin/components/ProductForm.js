@@ -60,10 +60,11 @@ function ProductForm() {
         formData.append(key, data[key]);
       }
     }
-
     if (params.id) {
       formData.append('id', params.id);
       formData.append('rating', selectedProduct.rating || 0);
+console.log(formData)
+
       dispatch(updateProductAsync(formData));
       alert.success('Product Updated');
     } else {

@@ -2,10 +2,15 @@ const express = require('express');
 const { createProduct, fetchAllProducts, fetchProductById, updateProduct } = require('../controller/Product');
 const multer = require('multer');
 const router = express.Router();
+const fs = require("fs");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+
+if (!fs.existsSync("public/uploads/")) {
+  fs.mkdirSync(`public/uploads/`);
+}
+    cb(null, 'public/uploads/');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);

@@ -8,10 +8,13 @@ const { Product } = require('../model/Product');
 
 exports.createProduct = async (req, res) => {
   try {
+    // console.log(req.files);
     const { title, description, price, discountPercentage, stock, brand, category } = req.body;
-    const thumbnail = req.files['thumbnail'][0].filename;
-    const images = req.files['images'].map(file => file.filename);
-
+    const thumbnail = `uploads/${req.files['thumbnail'][0].filename}`;
+    const image1 = `uploads/${req.files['image1'][0].filename}`;
+    const image2 = `uploads/${req.files['image2'][0].filename}`;
+    const image3 = `uploads/${req.files['image3'][0].filename}`;
+    console.log(thumbnail);
     const product = new Product({
       title,
       description,
@@ -21,13 +24,18 @@ exports.createProduct = async (req, res) => {
       brand,
       category,
       thumbnail,
-      images,
+      images:[image1,image2,image3],
     });
+    console.log(product);
 
     const doc = await product.save();
-    res.status(201).json(doc);
+    console.log(doc);
+
+    return res.status(201).json(doc);
   } catch (err) {
-    res.status(4000).json(err);
+    console.log(err);
+
+    return res.status(400).json(err);
   }
 };
 
@@ -86,11 +94,12 @@ exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   try {
     let updateData = req.body;
+    console.log(req.files['images']);
     if (req.files['thumbnail']) {
-      updateData.thumbnail = req.files['thumbnail'][0].filename;
+      updateData.thumbnail = `uploads/${req.files['thumbnail'][0].filename}`;
     }
     if (req.files['images']) {
-      updateData.images = req.files['images'].map(file => file.filename);
+      updateData.images = req.files['images'].map(file => `uploads/${file.filename}`);
     }
 
     const product = await Product.findByIdAndUpdate(id, updateData, { new: true });

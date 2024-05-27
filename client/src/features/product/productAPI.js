@@ -28,7 +28,7 @@ export function createProduct(product) {
         });
       }
 
-      const response = await fetch('http://localhost:8080/products', {
+      const response = await fetch('http://localhost:8080/products/', {
         method: 'POST',
         body: formData,
       });
