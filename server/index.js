@@ -32,6 +32,7 @@ opts.secretOrKey = SECRET_KEY; // TODO: should not be in code;
 //middlewares
 
 server.use(express.static('build'))
+server.use(express.static('public'));
 server.use(cookieParser());
 server.use(
   session({

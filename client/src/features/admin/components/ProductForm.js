@@ -23,7 +23,7 @@ function ProductForm() {
   const selectedProduct = useSelector(selectProductById);
   const [openModal, setOpenModal] = useState(null);
   const alert = useAlert();
-  
+
   useEffect(() => {
     if (params.id) {
       dispatch(fetchProductByIdAsync(params.id));
@@ -60,10 +60,12 @@ function ProductForm() {
         formData.append(key, data[key]);
       }
     }
-
+    console.log(formData)
     if (params.id) {
       formData.append('id', params.id);
       formData.append('rating', selectedProduct.rating || 0);
+      console.log(formData)
+
       dispatch(updateProductAsync(formData));
       alert.success('Product Updated');
     } else {
