@@ -8,14 +8,14 @@ import {
   selectProductById,
   updateProductAsync,
 } from '../../product/productSlice';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Modal from '../../common/Modal';
 import { useAlert } from 'react-alert';
 
 function ProductForm() {
-  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, reset, formState: { errors }, control } = useForm();
   const brands = useSelector(selectBrands);
   const categories = useSelector(selectCategories);
   const dispatch = useDispatch();
@@ -50,8 +50,14 @@ function ProductForm() {
   };
 
   const onSubmit = (data) => {
+    // console.log(data);
     const formData = new FormData();
+    // formData.append('thumbnail', data.thumbnail[0]);
+    // formData.append('image1', data.image1[0]);
+    // formData.append('image2', data.image2[0]);
+    // formData.append('image3', data.image3[0]);
     for (const key in data) {
+      console.log(data[key])
       if (key === 'thumbnail' || key.startsWith('image')) {
         if (data[key][0]) {
           formData.append(key, data[key][0]);
@@ -60,6 +66,7 @@ function ProductForm() {
         formData.append(key, data[key]);
       }
     }
+    console.log(data)
     console.log(formData)
     if (params.id) {
       formData.append('id', params.id);
@@ -77,7 +84,7 @@ function ProductForm() {
 
   return (
     <>
-      <form noValidate onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" method='POST'>
+      <form onSubmit={handleSubmit(onSubmit)} >
         <div className="space-y-12 bg-white p-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">Add Product</h2>
@@ -201,48 +208,127 @@ function ProductForm() {
               <div className="col-span-full">
                 <label htmlFor="thumbnail" className="block text-sm font-medium leading-6 text-gray-900">Thumbnail</label>
                 <div className="mt-2">
-                  <input
-                    type="file"
-                    {...register('thumbnail')}
-                    id="thumbnail"
-                    className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                  <Controller
+                    control={control}
+                    name={"thumbnail"}
+                    render={({ field: { value, onChange, ...field } }) => {
+                      return (
+                        <input
+                          {...field}
+                          value={value?.fileName}
+                          onChange={(event) => {
+                            onChange(event.target.files[0]);
+                          }}
+                          type="file"
+                          id="thumbnail"
+                          className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                        />
+                      );
+                    }}
                   />
+                  {/* <input
+                    type="file"
+                    // type='files'
+                    // ref={register}
+                    // value={thumbnail}
+                    name='thumbnail'
+                    {...register('thumbnail')}
+                    onChange={onChangeThumbnail}
+                    // id="thumbnail"
+                    className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                  /> */}
                 </div>
               </div>
 
               <div className="col-span-full">
                 <label htmlFor="image1" className="block text-sm font-medium leading-6 text-gray-900">Image 1</label>
                 <div className="mt-2">
-                  <input
+                  <Controller
+                    control={control}
+                    name={"image1"}
+                    render={({ field: { value, onChange, ...field } }) => {
+                      return (
+                        <input
+                          {...field}
+                          value={value?.fileName}
+                          onChange={(event) => {
+                            onChange(event.target.files[0]);
+                          }}
+                          type="file"
+                          id="image1"
+                          // className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                          className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+
+                        />
+                      );
+                    }}
+                  />
+                  {/* <input
                     type="file"
                     {...register('image1')}
                     id="image1"
                     className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-                  />
+                  /> */}
                 </div>
               </div>
 
               <div className="col-span-full">
                 <label htmlFor="image2" className="block text-sm font-medium leading-6 text-gray-900">Image 2</label>
                 <div className="mt-2">
-                  <input
+                <Controller
+                    control={control}
+                    name={"image2"}
+                    render={({ field: { value, onChange, ...field } }) => {
+                      return (
+                        <input
+                          {...field}
+                          value={value?.fileName}
+                          onChange={(event) => {
+                            onChange(event.target.files[0]);
+                          }}
+                          type="file"
+                          id="image2"
+                          className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                        />
+                      );
+                    }}
+                  />
+                  {/* <input
                     type="file"
                     {...register('image2')}
                     id="image2"
                     className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-                  />
+                  /> */}
                 </div>
               </div>
 
               <div className="col-span-full">
                 <label htmlFor="image3" className="block text-sm font-medium leading-6 text-gray-900">Image 3</label>
                 <div className="mt-2">
-                  <input
+                <Controller
+                    control={control}
+                    name={"image3"}
+                    render={({ field: { value, onChange, ...field } }) => {
+                      return (
+                        <input
+                          {...field}
+                          value={value?.fileName}
+                          onChange={(event) => {
+                            onChange(event.target.files[0]);
+                          }}
+                          type="file"
+                          id="image3"
+                          className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+                        />
+                      );
+                    }}
+                  />
+                  {/* <input
                     type="file"
                     {...register('image3')}
                     id="image3"
                     className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

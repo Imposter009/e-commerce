@@ -9,28 +9,37 @@ export function fetchProductById(id) {
 export function createProduct(product) {
   return new Promise(async (resolve, reject) => {
     try {
-      const formData = new FormData();
-      formData.append('title', product.title);
-      formData.append('description', product.description);
-      formData.append('price', product.price);
-      formData.append('discountPercentage', product.discountPercentage);
-      formData.append('stock', product.stock);
-      formData.append('brand', product.brand);
-      formData.append('category', product.category);
+      // const formData = new FormData();
+      // formData.append('title', product.title);
+      // formData.append('description', product.description);
+      // formData.append('price', product.price);
+      // formData.append('discountPercentage', product.discountPercentage);
+      // formData.append('stock', product.stock);
+      // formData.append('brand', product.brand);
+      // formData.append('category', product.category);
 
-      if (product.thumbnail) {
-        formData.append('thumbnail', product.thumbnail);
-      }
+      // if (product.thumbnail) {
+      //   formData.append('thumbnail', product.thumbnail);
+      // }
+      // if (product.image1) {
+      //   formData.append('image1', product.image1);
+      // }
+      // if (product.image2) {
+      //   formData.append('image2', product.image2);
+      // }
+      // if (product.image3) {
+      //   formData.append('image3', product.image3);
+      // }
 
-      if (product.images) {
-        product.images.forEach((image, index) => {
-          formData.append(`image${index + 1}`, image);
-        });
-      }
+      // if (product.images) {
+      //   product.images.forEach((image, index) => {
+      //     formData.append(`image${index + 1}`, image);
+      //   });
+      // }
 
       const response = await fetch('http://localhost:8080/products/', {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify(product),
       });
 
       if (!response.ok) {

@@ -16,7 +16,7 @@
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.9",
+    "react-hook-form": "^7.51.5",
     "react-loader-spinner": "^5.3.4",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
