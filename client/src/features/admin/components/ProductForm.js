@@ -22,6 +22,7 @@ function ProductForm() {
   const params = useParams();
   const selectedProduct = useSelector(selectProductById);
   const [openModal, setOpenModal] = useState(null);
+  // const [formData, setFormData] = useState({});
   const alert = useAlert();
 
   useEffect(() => {
@@ -43,48 +44,99 @@ function ProductForm() {
       setValue('category', selectedProduct.category);
     }
   }, [selectedProduct, params.id, setValue]);
-
+  // useEffect(() => { console.log(formData) }, [formData])
   const handleDelete = () => {
     const product = { ...selectedProduct, deleted: true };
     dispatch(updateProductAsync(product));
   };
 
-  const onSubmit = (data) => {
-    // console.log(data);
-    const formData = new FormData();
-    // formData.append('thumbnail', data.thumbnail[0]);
-    // formData.append('image1', data.image1[0]);
-    // formData.append('image2', data.image2[0]);
-    // formData.append('image3', data.image3[0]);
-    for (const key in data) {
-      console.log(data[key])
-      if (key === 'thumbnail' || key.startsWith('image')) {
-        if (data[key][0]) {
-          formData.append(key, data[key][0]);
-        }
-      } else {
-        formData.append(key, data[key]);
-      }
-    }
-    console.log(data)
-    console.log(formData)
-    if (params.id) {
-      formData.append('id', params.id);
-      formData.append('rating', selectedProduct.rating || 0);
-      console.log(formData)
+  // function getFormData(object) {
+  //   const formData = new FormData();
+  //   Object.keys(object).forEach(key => formData.append(key, object[key]));
+  //   console.log(formData)
+  //   return formData;
+  // }
+  // const onSubmit = (data) => {
+  //   // console.log(data);
+  //   const productForm = document.getElementById('productForm')
+  //   const formData = new FormData(productForm);
+  //   // setFormData(getFormData(data));
+  //   // formData.append('thumbnail', data.thumbnail[0]);
+  //   // formData.append('image1', data.image1[0]);
+  //   // formData.append('image2', data.image2[0]);
+  //   // formData.append('image3', data.image3[0]);
+  //   for (const key in data) {
+  //     console.log(data[key])
+  //       formData.append(key, data[key]);
+  //     // if (key === 'thumbnail' || key.startsWith('image')) {
+  //     //   if (data[key].name) {
+  //     //     // console.log(data[key].name)
+  //     //     // console.log(data[key][0]) this is undefined
+  //     //     formData.append(key, data[key][0]);
+  //     //   }
+  //     // } else {
+  //     //   console.log(data[key])
+  //     //   formData.append(key, data[key]);
+  //     // }
+  //   }
+  //   // console.log(data)
+  //   // console.log(formData)
+  //   // debugger;
+  //   // formData.append(key, data[key])
+  //   console.log(formData)
+  //   if (params.id) {
+  //     formData.append('id', params.id);
+  //     formData.append('rating', selectedProduct.rating || 0);
+  //     console.log(formData)
 
-      dispatch(updateProductAsync(formData));
+  //     dispatch(updateProductAsync(formData));
+  //     alert.success('Product Updated');
+  //   } else {
+  //     dispatch(createProductAsync(formData));
+  //     alert.success('Product Created');
+  //   }
+  //   reset();
+  // };
+  const onSubmit = (data) => {
+    // const formData = new FormData();
+    // formData.append('title', data.title);
+    // formData.append('description', data.description);
+    // formData.append('price', data.price);
+    // formData.append('discountPercentage', data.discountPercentage);
+    // formData.append('stock', data.stock);
+    // formData.append('brand', data.brand);
+    // formData.append('category', data.category);
+
+    // if (data.thumbnail[0]) {
+    //   formData.append('thumbnail', data.thumbnail[0]);
+    // }
+    // if (data.image1[0]) {
+    //   formData.append('image1', data.image1[0]);
+    // }
+    // if (data.image2[0]) {
+    //   formData.append('image2', data.image2[0]);
+    // }
+    // if (data.image3[0]) {
+    //   formData.append('image3', data.image3[0]);
+    // }
+    if (params.id) {
+      // formData.append('id', params.id);
+      // formData.append('rating', selectedProduct.rating || 0);
+      dispatch(updateProductAsync(data));
       alert.success('Product Updated');
+      
     } else {
-      dispatch(createProductAsync(formData));
+      // console.log(formData)
+      dispatch(createProductAsync(data));
       alert.success('Product Created');
     }
+
     reset();
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form id='productForm' onSubmit={handleSubmit(onSubmit)} >
         <div className="space-y-12 bg-white p-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">Add Product</h2>
@@ -275,7 +327,7 @@ function ProductForm() {
               <div className="col-span-full">
                 <label htmlFor="image2" className="block text-sm font-medium leading-6 text-gray-900">Image 2</label>
                 <div className="mt-2">
-                <Controller
+                  <Controller
                     control={control}
                     name={"image2"}
                     render={({ field: { value, onChange, ...field } }) => {
@@ -305,7 +357,7 @@ function ProductForm() {
               <div className="col-span-full">
                 <label htmlFor="image3" className="block text-sm font-medium leading-6 text-gray-900">Image 3</label>
                 <div className="mt-2">
-                <Controller
+                  <Controller
                     control={control}
                     name={"image3"}
                     render={({ field: { value, onChange, ...field } }) => {
