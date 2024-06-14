@@ -8,7 +8,8 @@ const { Product } = require('../model/Product');
 
 exports.createProduct = async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
+    console.log(req.files);
     const { title, description, price, discountPercentage, stock, brand, category } = req.body;
     const thumbnail = `uploads/${req.files['thumbnail'][0].filename}`;
     const image1 = `uploads/${req.files['image1'][0].filename}`;

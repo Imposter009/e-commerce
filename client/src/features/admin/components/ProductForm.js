@@ -22,7 +22,6 @@ function ProductForm() {
   const params = useParams();
   const selectedProduct = useSelector(selectProductById);
   const [openModal, setOpenModal] = useState(null);
-  // const [formData, setFormData] = useState({});
   const alert = useAlert();
 
   useEffect(() => {
@@ -39,94 +38,32 @@ function ProductForm() {
       setValue('description', selectedProduct.description);
       setValue('price', selectedProduct.price);
       setValue('discountPercentage', selectedProduct.discountPercentage);
+      setValue('thumbnail', selectedProduct.thumbnail);
       setValue('stock', selectedProduct.stock);
+      setValue('image1', selectedProduct.images[0]);
+      setValue('image2', selectedProduct.images[1]);
+      setValue('image3', selectedProduct.images[2]);
       setValue('brand', selectedProduct.brand);
       setValue('category', selectedProduct.category);
+      setValue('id', selectedProduct.id);
     }
   }, [selectedProduct, params.id, setValue]);
-  // useEffect(() => { console.log(formData) }, [formData])
   const handleDelete = () => {
-    const product = { ...selectedProduct, deleted: true };
+    // const product = { ...selectedProduct, deleted: true };
+    const product = { ...selectedProduct };
+    product.deleted = true;
     dispatch(updateProductAsync(product));
   };
 
-  // function getFormData(object) {
-  //   const formData = new FormData();
-  //   Object.keys(object).forEach(key => formData.append(key, object[key]));
-  //   console.log(formData)
-  //   return formData;
-  // }
-  // const onSubmit = (data) => {
-  //   // console.log(data);
-  //   const productForm = document.getElementById('productForm')
-  //   const formData = new FormData(productForm);
-  //   // setFormData(getFormData(data));
-  //   // formData.append('thumbnail', data.thumbnail[0]);
-  //   // formData.append('image1', data.image1[0]);
-  //   // formData.append('image2', data.image2[0]);
-  //   // formData.append('image3', data.image3[0]);
-  //   for (const key in data) {
-  //     console.log(data[key])
-  //       formData.append(key, data[key]);
-  //     // if (key === 'thumbnail' || key.startsWith('image')) {
-  //     //   if (data[key].name) {
-  //     //     // console.log(data[key].name)
-  //     //     // console.log(data[key][0]) this is undefined
-  //     //     formData.append(key, data[key][0]);
-  //     //   }
-  //     // } else {
-  //     //   console.log(data[key])
-  //     //   formData.append(key, data[key]);
-  //     // }
-  //   }
-  //   // console.log(data)
-  //   // console.log(formData)
-  //   // debugger;
-  //   // formData.append(key, data[key])
-  //   console.log(formData)
-  //   if (params.id) {
-  //     formData.append('id', params.id);
-  //     formData.append('rating', selectedProduct.rating || 0);
-  //     console.log(formData)
-
-  //     dispatch(updateProductAsync(formData));
-  //     alert.success('Product Updated');
-  //   } else {
-  //     dispatch(createProductAsync(formData));
-  //     alert.success('Product Created');
-  //   }
-  //   reset();
-  // };
   const onSubmit = (data) => {
-    // const formData = new FormData();
-    // formData.append('title', data.title);
-    // formData.append('description', data.description);
-    // formData.append('price', data.price);
-    // formData.append('discountPercentage', data.discountPercentage);
-    // formData.append('stock', data.stock);
-    // formData.append('brand', data.brand);
-    // formData.append('category', data.category);
-
-    // if (data.thumbnail[0]) {
-    //   formData.append('thumbnail', data.thumbnail[0]);
-    // }
-    // if (data.image1[0]) {
-    //   formData.append('image1', data.image1[0]);
-    // }
-    // if (data.image2[0]) {
-    //   formData.append('image2', data.image2[0]);
-    // }
-    // if (data.image3[0]) {
-    //   formData.append('image3', data.image3[0]);
-    // }
+    const product = { ...data };
     if (params.id) {
-      // formData.append('id', params.id);
-      // formData.append('rating', selectedProduct.rating || 0);
-      dispatch(updateProductAsync(data));
+      product.rating = selectedProduct.rating || 0;
+      console.log(product)
+      dispatch(updateProductAsync(product));
       alert.success('Product Updated');
       
     } else {
-      // console.log(formData)
       dispatch(createProductAsync(data));
       alert.success('Product Created');
     }
