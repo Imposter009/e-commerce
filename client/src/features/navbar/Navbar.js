@@ -11,7 +11,6 @@ import { selectItems } from '../cart/cartSlice';
 import { selectLoggedInUser } from '../auth/authSlice';
 import { selectUserInfo } from '../user/userSlice';
 
-
 const navigation = [
   { name: 'Products', link: '/', user: true },
   { name: 'Products', link: '/admin', admin: true },
@@ -35,7 +34,8 @@ function NavBar({ children }) {
   return (
     <>
       {userInfo &&<div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        {/* <Disclosure as="nav" className="bg-gray-800"> */}
+        <Disclosure as="nav" className="bg-red-200">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -44,7 +44,7 @@ function NavBar({ children }) {
                     <div className="flex-shrink-0">
                       <Link to="/">
                         <img
-                          className="h-8 w-8"
+                          className="h-20 w-20"
                           src="/ecommerce.png"
                           alt="Your Company"
                         />
@@ -77,7 +77,7 @@ function NavBar({ children }) {
                       <Link to="/cart">
                         <button
                           type="button"
-                          className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                          className="rounded-full bg-red-200 p-1 text-black-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         >
                           <span className="sr-only">View notifications</span>
                           <ShoppingCartIcon
@@ -99,7 +99,7 @@ function NavBar({ children }) {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={userInfo.imageUrl}
+                              src='/avatar-svgrepo-com.png'
                               alt=""
                             />
                           </Menu.Button>
