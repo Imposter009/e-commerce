@@ -118,7 +118,7 @@ function ProductForm() {
               </div>
 
               <div className="col-span-full">
-                <label htmlFor="brand" className="block text-sm font-medium leading-6 text-gray-900">Brand</label>
+                <label htmlFor="brand" className="block text-sm font-medium leading-6 text-gray-900">Fabrics</label>
                 <div className="mt-2">
                   <select
                     {...register('brand', { required: 'brand is required' })}
