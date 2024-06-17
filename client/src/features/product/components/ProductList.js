@@ -55,7 +55,7 @@ export default function ProductList() {
     },
     {
       id: 'brand',
-      name: 'Brands',
+      name: 'Fabrics',
       options: brands,
     },
   ];
